@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using EmployeeService.Models;
 using System.Reflection;
 using EmployeeService.DTOs;
+using Microsoft.AspNetCore.Cors;
 
 namespace EmployeeService.Controllers
 {
+    [EnableCors("AllowAny")]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeesController : ControllerBase

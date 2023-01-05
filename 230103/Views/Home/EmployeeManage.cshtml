@@ -1,0 +1,21 @@
+﻿<button id="getEmployees" class=" btn btn-primary">GetEmployees</button>
+
+@section Scripts
+{
+	<script>
+		$("#getEmployees").on("click", function (){
+			//alert("get Employees");
+			$.ajax({
+				type:"GET",
+				url: "https://localhost:7238/api/Employees"
+			})
+			.done(function(data){
+				alert(data);
+			})
+			.fail(function(err){
+				alert(err.statusText);
+			});
+		});
+		
+	</script>
+}
