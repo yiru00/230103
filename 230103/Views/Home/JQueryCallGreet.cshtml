@@ -1,0 +1,64 @@
+﻿<button class="btn btn-primary" onclick="jqueryGetCallGreetSync()">jquery call greet (Get同步)</button>
+<button class="btn btn-primary" onclick="jqueryGetCallGreetAsync()">jquery call greet (Get非同步)</button>
+<button class="btn btn-primary" onclick="jqueryPostCallGreetSync()">jquery call greet (Post非同步)</button>
+<img id="progress" src="~/images/balls.gif" asp-append-version="true" />
+<div id="result"></div>
+@section Scripts
+	{
+	<script>
+		function jqueryGetCallGreetSync(){
+			//alert("jquery call greet (Get同步)")
+			$("#progress").show()
+			var p = encodeURI("Name=陳小0 Get非同步"); //有中文=>編碼encodeURI
+			$.ajax({
+				type:"GET",
+				async:false,
+				url: "https://localhost:7117/Ajax/Greet?" + p,
+				timeout:5000  //逾時5秒不候
+			})
+			.done(function (data){
+				$("#result").text(data);
+				$("#progress").hide();
+			})
+			.fail(function(err){
+				alert(err.statusText)
+			})
+		}
+		function jqueryGetCallGreetAsync() {
+			//alert("jquery call greet (Get非同步)")
+			$("#progress").show()
+			var p = encodeURI("Name=陳小0 Get非同步"); //有中文=>編碼encodeURI
+			$.ajax({
+				type: "GET",
+				url: "https://localhost:7117/Ajax/Greet?" + p,
+			})
+				.done(function (data) {
+					$("#result").text(data);
+					$("#progress").hide();
+				})
+				.fail(function (err) {
+					alert(err.statusText)
+				})
+		}
+		function jqueryPostCallGreetSync(){
+			//alert("jquery call greet (Post非同步)")
+			$("#progress").show()
+			
+			$.ajax({
+				type: "post",
+				data:{
+					Name: "陳小0 Post非同步",
+				},
+				url: "https://localhost:7117/Ajax/Greet",
+			})
+				.done(function (data) {
+					$("#result").text(data);
+					$("#progress").hide();
+				})
+				.fail(function (err) {
+					alert(err.statusText)
+				})
+		}
+
+	</script>
+}

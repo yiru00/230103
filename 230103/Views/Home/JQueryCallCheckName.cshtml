@@ -1,0 +1,36 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<label>檢查名稱</label>
+<input type="text" onkeyup="keyup()" id="CompanyName" />
+<span id="result"></span>
+<img id="progress" src="~/images/balls.gif" asp-append-version="true" />
+
+
+@section Scripts
+	{
+	<script>
+		function keyup() {
+			$("#progress").show()
+			
+			$.ajax({
+				type: "post",
+				data:{
+					CompanyName: $("#CompanyName").val(),
+				},
+				url: "https://localhost:7117/Ajax/CheckName",
+			})
+				.done(function (data) {
+					if (data === "true") { $("#result").text("查有此公司") }
+					else { $("#result").text("查無此公司") }
+					;
+					$("#progress").hide();
+				})
+				.fail(function (err) {
+					alert(err.statusText)
+				})
+		}
+	</script>
+}

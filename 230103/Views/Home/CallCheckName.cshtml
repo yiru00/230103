@@ -1,0 +1,39 @@
+﻿<label>檢查名稱</label>
+<input type="text" onkeyup="keyup()" id="CompanyName" />
+<span id="result"></span>
+<img id="progress" src="~/images/balls.gif" asp-append-version="true" />
+
+
+@section Scripts
+	{
+	<script>
+		function keyup(){
+			var xmlHttp = new XMLHttpRequest();
+			if (xmlHttp != null) {
+				var p = `CompanyName=${document.getElementById("CompanyName").value}`;
+				xmlHttp.open("POST", "https://localhost:7117/Ajax/CheckName", true);
+				xmlHttp.onreadystatechange = function () {
+					if (xmlHttp.readyState == 4) {
+						if (xmlHttp.status == 200) {
+							if(xmlHttp.responseText=="true"){
+								document.getElementById("result").innerText = "已登記";
+							}else{
+								document.getElementById("result").innerText = "未登記";
+							}
+							document.getElementById("progress").style.display = "none";
+
+						}
+					}
+				}
+
+				document.getElementById("progress").style.display = "inline";
+				xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
+				xmlHttp.send(p);
+
+			}
+			else {
+				alert("不支援")
+			}
+		}
+	</script>
+}
